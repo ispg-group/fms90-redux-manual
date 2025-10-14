@@ -13,8 +13,8 @@
 \newcommand\bfec[1]{\textcolor{orange}{\textit{ XXX BFEC: #1 XXX }}}
 \renewcommand\dh[1]{\textcolor{purple}{\textit{ DH: #1 }}}
 
-\title{FMS90redux \\ Users' Guide}
-\author{Benjamin G. Levine, Joshua D. Coe, Aaron M. Virshup, Hongli Tao, \\ Christian R. Evenhuis, William J. Glover, Toshifumi Mori, Michal Ben-Nun, Yorick Lassmann, \\ Daniel Hollas, Basile F. E. Curchod,  and Todd J. Mart\'{i}nez}
+\title{OpenFMS90 \\ Users' Guide}
+%\author{Benjamin G. Levine, Joshua D. Coe, Aaron M. Virshup, Hongli Tao, \\ Christian R. Evenhuis, William J. Glover, Toshifumi Mori, Michal Ben-Nun, Yorick Lassmann, \\ Daniel Hollas, Basile F. E. Curchod,  and Todd J. Mart\'{i}nez}
 \date{\today}                     
 \begin{document}
 \maketitle
@@ -31,12 +31,12 @@
 
 
 %2 INTRO
-The AIMS module implements the Ab Initio Multiple Spawning method to perform dynamics 
+OpenFMS90 implements the Ab Initio Multiple Spawning (AIMS) method to perform dynamics 
 calculations on multiple electronic states. 
 
-AIMS provides a description of a time-evolving molecular wavepacket with a multi-configurational, 
-product gaussian function basis. To allow the size of the basis set to remain small while describing 
-the wavepacket dynamics, the centers of the full-dimensional gaussian functions follow classical 
+AIMS provides a description of a time-evolving molecular wavepacket with a multiconfigurational, 
+product Gaussian function basis. To allow the size of the basis set to remain small while describing 
+the wavepacket dynamics, the centers of the full-dimensional Gaussian functions follow classical 
 trajectories while their widths are kept fixed (the frozen Gaussian approximation). When these 
 classical trajectories encounter regions of large non-adiabatic coupling to another electronic state, 
 new basis functions are {\em spawned} on the coupled state and the Time Dependent Schr\"odinger 
@@ -66,15 +66,15 @@ the above:
 \item Y. Lassmann, D. Hollas, B. F. E. Curchod, J. Phys. Chem. Lett., \textbf{13}, 12011 (2022).
 \end{itemize}
 
-\noindent Publications using XFAIMS should cite:
-\begin{itemize}
-\item B. Mignolet,  B. F. E. Curchod,  and T. J. Mart\'{i}nez, J. Chem. Phys., \textbf{145}, 191104 (2016).
-\end{itemize}
+% \noindent Publications using XFAIMS should cite:
+% \begin{itemize}
+% \item B. Mignolet,  B. F. E. Curchod,  and T. J. Mart\'{i}nez, J. Chem. Phys., \textbf{145}, 191104 (2016).
+% \end{itemize}
 
-\noindent Publications using GAIMS should cite:
-\begin{itemize}
-\item B. F. E. Curchod, C. Rauer, P. Marquetand, L. Gonz\'{a}lez, and T. J. Mart\'{i}nez, J. Chem. Phys., \textbf{144}, 101102 (2016). 
-\end{itemize}
+% \noindent Publications using GAIMS should cite:
+% \begin{itemize}
+% \item B. F. E. Curchod, C. Rauer, P. Marquetand, L. Gonz\'{a}lez, and T. J. Mart\'{i}nez, J. Chem. Phys., \textbf{144}, 101102 (2016). 
+% \end{itemize}
 
 \noindent For additional information about AIMS, see:
 \begin{itemize}
@@ -89,40 +89,45 @@ the above:
 \item B. Mignolet, B. F. E. Curchod, J. Chem. Phys., \textbf{148}, 134110 (2018).
 \end{itemize}
 
+\subsection{About this manual}
 
+If you have any comments or additions for this manual, please open an issues on the GitHub repository of OpenFMS90 (\url{https://github.com/ispg-group/fms90-redux/tree/main}).
 
-\newpage \section{Building FMS \bfec{to be updated}}
+\newpage \section{Building OpenFMS90}
 \label{build}
 
-\subsection{Quick start}
-\label{start}
-\begin{enumerate}
-\item In the top level of the FMS directory, run \verb*$./configure$ to interactively configure your FMS installation.
-\item Run \verb*$make$ to compile the code. Binaries are installed in the \verb*$bin/$ directory
-%\item (recommended) Run \verb*$make util$ to compile the helper utilities. (Note that this cannot be done when linking with molpro)
-%\item (optional) Run \verb*$make doc$ to assemble documentation (requires latex; code documentation additionally requires doxygen)
-\item  Run \verb*$make test$ to run the battery of test jobs in the ``tests'' directory. The tests will be automatically checked for any run-time errors; the results should be manually verified.
-\end{enumerate}
+To compile OpenFMS90, please follow the up-to-date instructions that can be found on the GitHub page of the code: \url{https://github.com/ispg-group/fms90-redux/tree/main}.
 
 
-\subsection{Configuring the build}
-Run \verb*$./configure$ to interactively configure your FMS installation. You will be prompted for electronic structure interface and compiler, and to provide the locations of the required libraries and utilities. This will create a file, \verb*$CONFIGFMS$, with the configuration options. This file can be modified, e.g. to fine-tune compiler flags or change library information.
+% \subsection{Quick start}
+% \label{start}
+% \begin{enumerate}
+% \item In the top level of the FMS directory, run \verb*$./configure$ to interactively configure your FMS installation.
+% \item Run \verb*$make$ to compile the code. Binaries are installed in the \verb*$bin/$ directory
+% %\item (recommended) Run \verb*$make util$ to compile the helper utilities. (Note that this cannot be done when linking with molpro)
+% %\item (optional) Run \verb*$make doc$ to assemble documentation (requires latex; code documentation additionally requires doxygen)
+% \item  Run \verb*$make test$ to run the battery of test jobs in the ``tests'' directory. The tests will be automatically checked for any run-time errors; the results should be manually verified.
+% \end{enumerate}
 
-\subsection{Making the code}
-After a CONFIGFMS file has been created, type \verb*$make$ to compile the FMS code. An executable will be created and placed in the bin/ directory. 
-%FMS utilities will also be compiled and placed in the util/ directory.
 
-\subsubsection{FMSTerachem}
-\label{BuildFMSTC}
-\bfec{XXX}
+% \subsection{Configuring the build}
+% Run \verb*$./configure$ to interactively configure your FMS installation. You will be prompted for electronic structure interface and compiler, and to provide the locations of the required libraries and utilities. This will create a file, \verb*$CONFIGFMS$, with the configuration options. This file can be modified, e.g. to fine-tune compiler flags or change library information.
+
+% \subsection{Making the code}
+% After a CONFIGFMS file has been created, type \verb*$make$ to compile the FMS code. An executable will be created and placed in the bin/ directory. 
+% %FMS utilities will also be compiled and placed in the util/ directory.
+
+% \subsubsection{FMSTerachem}
+% \label{BuildFMSTC}
+% \bfec{XXX}
 
 %\subsubsection{FMSQuantics}
 %\bfec{XXX}
 
-\subsubsection{Documentation \bfec{check}}
-Typing \verb*$make doc$ will create the documentation. Both user and code documentation require a functioning latex distribution; code documentation also requires doxygen (\url{http://www.doxygen.org/}).
+%\subsubsection{Documentation \bfec{check}}
+%Typing \verb*$make doc$ will create the documentation. Both user and code documentation require a functioning latex distribution; code documentation also requires doxygen (\url{http://www.doxygen.org/}).
 
-\dh{TODO: \url{https://github.com/ispg-group/fms90-redux/issues/131}}
+%\dh{TODO: \url{https://github.com/ispg-group/fms90-redux/issues/131}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -132,44 +137,45 @@ Typing \verb*$make doc$ will create the documentation. Both user and code docume
 \newpage \section{Overview}
 \label{running} 
 
-This section provides an overview of the basic FMS program flow for AIMS dynamics. The reader is assumed to be familiar with the fundamental principles of AIMS; see the FMS bibliography (sec. \ref{sec:aimsbiblio}) for a list of references. For details of other calculation types, see section \ref{other}.
+This section provides an overview of the basic OpenFMS90 program flow for AIMS dynamics. The reader is assumed to be familiar with the fundamental principles of AIMS; see the OpenFMS90 bibliography (sec. \ref{sec:aimsbiblio}) for a list of references. 
+%For details of other calculation types, see section \ref{other}.
 
 
 \subsection{Initial Conditions}
 \label{initial} 
 
-Prior to the beginning of AIMS dynamics, initial conditions may be generated from an adequate ground-state distribution. FMS provides a variety of sampling methods, depending on the system type. Alternatively, initial coordinates and momenta may be specified manually in Geometry.dat (sec. \ref{geomdat}).
+Prior to the beginning of AIMS dynamics, initial conditions may be generated from an adequate ground-state distribution. OpenFMS90 provides a variety of sampling methods, depending on the system type. Alternatively, initial coordinates and momenta may be specified manually in Geometry.dat (sec. \ref{geomdat}).
 
 Initial conditions are generated in the following manner (with corresponding namelist variables):
 
 \paragraph{QM Calculations}
-For purely QM PESs, initial conditions are sampled from the harmonic oscillator states of a PES minimum, using one of several semi-classical transformations (sec. \ref{initial}). The geometry of the PES minimum is read from Geometry.dat (sec. \ref{geomdat}), while the frequencies or hessian of the minimum are read from their corresponding files (sec. \ref{freqfile}).
+For purely QM PESs, initial conditions are sampled from the harmonic oscillator states of a PES minimum, using one of several semi-classical transformations (sec. \ref{initial}). The geometry of the PES minimum is read from Geometry.dat (sec. \ref{geomdat}), while the frequencies or hessian of the minimum are read from their corresponding files (secs. \ref{aims:hessian} and \ref{aims:frequencies}).
 
-\paragraph{QM/MM calculations \bfec{check}}
-\begin{enumerate}
- \item  The starting geometry is retrieved from the MM package from the MM package.
- \item  For solvated runs, solvent positions may be randomly generated (GenSolvent,NumS,NumAS).
- \item  The energy of the MM system may be quenched (nRelaxSteps).
- \item  The system may be equilibrated. The QM system may be held rigid (EquiCon,BrownCon), in which case no QM calculations are necessary. Otherwise, the system can be equilibrated on the full QM/MM PES (Equi, Brown)
- \item  Initial conditions are sampled for the QM region (InitialCond) \textbf{IF}:
-\begin{itemize}
- \item  The QM system was held rigid during equilibration, or
- \item  No equilibration took place
-\end{itemize}
-\end{enumerate}
+% \paragraph{QM/MM calculations \bfec{check}}
+% \begin{enumerate}
+%  \item  The starting geometry is retrieved from the MM package from the MM package.
+%  \item  For solvated runs, solvent positions may be randomly generated (GenSolvent,NumS,NumAS).
+%  \item  The energy of the MM system may be quenched (nRelaxSteps).
+%  \item  The system may be equilibrated. The QM system may be held rigid (EquiCon,BrownCon), in which case no QM calculations are necessary. Otherwise, the system can be equilibrated on the full QM/MM PES (Equi, Brown)
+%  \item  Initial conditions are sampled for the QM region (InitialCond) \textbf{IF}:
+% \begin{itemize}
+%  \item  The QM system was held rigid during equilibration, or
+%  \item  No equilibration took place
+% \end{itemize}
+% \end{enumerate}
 
 
 \subsection{Restarting}
 \label{restart} 
 
-If, in Control.dat, \verb*$iRestart$ is not equal to 0, FMS will attempt to restart dynamics from Bundle.h5. A restart requires all the original input files and \bfec{name of file?}. Any variable in Control.dat may be changed between restarts.
+If, in Control.dat, \verb*$iRestart$ is not equal to 0, OpenFMS90 will attempt to restart dynamics. A restart requires all the original input files and Checkpoint.txt (if Checkpoint.txt cannot be found, OpenFMS90 will use Last\_Bundle.txt). Any variable in Control.dat may be changed between restarts.
 
 \subsection{Dynamics}
 \label{dyn}
 
-Time-evolution of the combined electronic and nuclear wavefunction is, of course, the main goal of FMS, and the bulk of computational time is spent doing this. At each timestep, the classical trajectories and their quantum mechanical amplitudes are time-evolved by one timestep. The timestep is determined on the fly, and may be automatically reduced to integrate rapidly-varying regions of the PES.
+Time-evolution of the combined electronic and nuclear wavefunction is, of course, the main goal of OpenFMS90, and the bulk of computational time is spent doing this. At each timestep, the classical trajectories and their quantum mechanical amplitudes are time-evolved by one timestep. The timestep is determined on the fly, and may be automatically reduced to integrate rapidly-varying regions of the PES.
 
-After moving the full wavefunction forward in time by one timestep, FMS will spawn new trajectory basis functions, if necessary. FMS will also terminate the propagation of trajectories that no longer have enough population to spawn, or are on the state specified by ``IgnoreState". Quantum mechanically, the terminated trajectory basis functions are assumed to occupy a block of the Hamiltonian that does not change in time, and whose off-diagonal coupling elements with all live basis functions are 0. In this way, the energy and population of terminated basis functions are still included in overall analyses of simulation, but are not evolved in time.
+After moving the full wavefunction forward in time by one timestep, OpenFMS90 will spawn new trajectory basis functions, if necessary. OpenFMS90 will also terminate the propagation of trajectories that no longer have enough population to spawn, or are on the state specified by ``IgnoreState". Quantum mechanically, the terminated trajectory basis functions are assumed to occupy a block of the Hamiltonian that does not change in time, and whose off-diagonal coupling elements with all live basis functions are 0. In this way, the energy and population of terminated basis functions are still included in overall analyses of simulation, but are not evolved in time.
 
 Output is written to files after every ``nStepToPrint''timesteps. Information sufficient to reconstruct the entire simulation state at a given timestep is written to ``Checkpoint.dat".
 
@@ -184,7 +190,7 @@ Output is written to files after every ``nStepToPrint''timesteps. Information su
 \newpage \section{Files Used}
 \label{files} 
 
-Each FMS run must take place in its own directory.
+Each AIMS run must take place in its own directory.
 
 \subsection{Input files}
 \label{inputfiles} 
@@ -196,7 +202,7 @@ Additional input files may be required by various electronic structure methods. 
  \textbf{Filename} & \textbf{Purpose} \\ \hline 
  Control.dat & Control over program behavior and atom typing (sec. \ref{controldat}) \\ \hline 
  Geometry.dat & Initial geometry (and optionally momentum) input (sec. \ref{geomdat}) \\ \hline 
- Hessian.dat OR Frequencies.dat & Frequencies input for initial condition sampling (sec. \ref{freqfile}) \\ \hline 
+ Hessian.dat OR Frequencies.dat & Frequencies input for initial condition sampling (secs. \ref{aims:hessian} and \ref{aims:frequencies}) \\ \hline 
 \end{tabular}
 
 
@@ -406,7 +412,13 @@ Expert parameters:\\
 Parameter & Options (Default)& Description \\
 \hline
 Required parameters:\\
-{\tt XXXX}          & {\tt XXXX}                & {\small XXXX.}\\
+{\tt Stochastic}          & {\tt Logical (.false.) }                & {\small Initiate stochastic-selection AIMS (SSAIMS).}\\
+{\tt StochasticOlap}          & {\tt Logical (.false.) }                & {\small Choose between energy-based SSAIMS}\\&& 
+{\small (ESSAIMS, false, default)}\\&& 
+{\small or overlap-based SSAIMS (OSSAIMS, true).}\\
+{\tt StochasticThresh}          & {\tt Real (1.0d-10) }                & {\small Stochastic selection threshold.} \\&&
+{\small Value corresponds to an overlap for OSSAIMS.} \\&&
+{\small Value corresponds to an energy for if ESSAIMS.} \\
 \hline\hline
 \end{tabular}
 \end{table}
@@ -418,34 +430,35 @@ Required parameters:\\
 Parameter & Options (Default)& Description \\
 \hline
 Required parameters:\\
-{\tt XXXX}          & {\tt XXXX}                & {\small XXXX.}\\
+{\tt StochasticSwiss}          & {\tt Logical (.false.) }                & {\small Initiate AIMS with informed stochastic selections} \\&&  
+{\small(AIMSWISS).}\\
 \hline\hline
 \end{tabular}
 \end{table}
 
-\begin{table}[h]
-\caption{GAIMS}
-\begin{tabular}{ l l l }
-\hline\hline
-Parameter & Options (Default)& Description \\
-\hline
-Required parameters:\\
-{\tt XXXX}          & {\tt XXXX}                & {\small XXXX.}\\
-\hline\hline
-\end{tabular}
-\end{table}
+% \begin{table}[h]
+% \caption{GAIMS}
+% \begin{tabular}{ l l l }
+% \hline\hline
+% Parameter & Options (Default)& Description \\
+% \hline
+% Required parameters:\\
+% {\tt XXXX}          & {\tt XXXX}                & {\small XXXX.}\\
+% \hline\hline
+% \end{tabular}
+% \end{table}
 
-\begin{table}[h]
-\caption{XFAIMS}
-\begin{tabular}{ l l l }
-\hline\hline
-Parameter & Options (Default)& Description \\
-\hline
-Required parameters:\\
-{\tt XXXX}          & {\tt XXXX}                & {\small XXXX.}\\
-\hline\hline
-\end{tabular}
-\end{table}
+% \begin{table}[h]
+% \caption{XFAIMS}
+% \begin{tabular}{ l l l }
+% \hline\hline
+% Parameter & Options (Default)& Description \\
+% \hline
+% Required parameters:\\
+% {\tt XXXX}          & {\tt XXXX}                & {\small XXXX.}\\
+% \hline\hline
+% \end{tabular}
+% \end{table}
 
 \clearpage
 \newpage
@@ -456,7 +469,10 @@ Required parameters:\\
 Parameter & Options (Default)& Description \\
 \hline
 Common parameters:\\
-{\tt CSThresh}       & {\tt Real (0.1)}       & {\small Threshold Coupling, above which to spawn.}\\
+{\tt CSThresh}       & {\tt Real (0.1)}       & {\small Threshold Coupling, above which to spawn.}\\&&
+{\small Caution: this is the norm of NACV by default,}\\ &&
+{\small but this threshold should be changed if}\\ &&
+{\small{\tt SpawnCoupV} is used.}\\
 {\tt PopToSpawn}     & {\tt Real (0.1)}       & {\small Minimum population a trajectory must have}\\&&
                                                 {\small before it can spawn.}\\
 {\tt OMax}           & {\tt Real (0.8)}       & {\small Prevent spawning if overlap of spawned}\\&&
@@ -475,7 +491,7 @@ Expert parameters:\\
 %                                                {\small spawn during one coupling event.}\\
 {\tt DecoherenceTime}&{\tt Real (200.0)}      & {\small See above.}\\
 {\tt SpawnCoupV}     & {\tt Logical (.false.)}& {\small Use Coup.velocity as criterion for spawning}\\&&
-                                                {\small rather than Coupling magnitude alone.}\\
+                                                {\small rather than NACV magnitude alone.}\\
 {\tt EShellOnly}     & {\tt Logical (.true.)} & {\small Require spawned trajetories to have same}\\&&
                                                 {\small classical energy as parent by adjusting}\\&&
                                                 {\small momentum along NACV.}\\
@@ -569,7 +585,7 @@ $\vdots$\\
 The widths of other atoms not included in AIMS can be obtained using the recipe described in Chem. Phys., \textbf{370}, 70 (2010) by using the code available at \url{}.
 
 %3 Geometry.dat
-\subsection{Geometry.dat\label{aims:geometry}}
+\subsection{Geometry.dat\label{geomdat}}
 Geometry.dat contains the molecular geometry that will be used in the generation of initial conditions.
 Optionally, the momenta can also be specified, which is useful if\\
 {\tt InitialCond='NoSample'}:
@@ -1064,9 +1080,9 @@ This file is generated by AIMS if either FrequenciesMP.dat or Hessian.dat is use
 
 
 
-\subsection{FMS90-Terachem}
+\subsection{OpenFMS90-Terachem}
 \label{fms90tcl} 
-
+Follow the most up-to-date instructions on the GitHub page of OpenFMS90: \url{https://github.com/ispg-group/fms90-redux/tree/main}.
 %\subsection{FMS90-Quantics}
 %\label{fms90quant} 
 
@@ -1191,13 +1207,19 @@ This file is generated by AIMS if either FrequenciesMP.dat or Hessian.dat is use
 \subsection{FMSZero}
 \label{zero} 
 
-FMS90 contains a series of (analytical) model systems that can be used for development or to get acquainted with a typical AIMS simulation without the associated electronic-structure costs. The following models are implemented:
+OpenFMS90 contains a series of (analytical) model systems that can be used for development or to get acquainted with a typical AIMS simulation without the associated electronic-structure costs. The desired model is selected with the keyword gliModel. The following models are implemented:
 
 \begin{itemize}
-\item[\texttt{gliMethod=2}] \bfec{check}
+\item gliModel=2 \\ Persico 2-D 2-state CI (in stretched coordinates) \\ Ferretti et al, J. Chem. Phys., 104, 5517 (1996).
+
+\item gliModel=3 \\ Izmaylov 2-D 2-state LVC \\
+   Ryabinkin et al, J. Chem. Phys., 140, 214116 (2014). 
+\item gliModel=4 \\ 
+Spin-orbit coupling Model 1D 2-state (1 singlet, 1 triplet)  \\
+   Granucci et al, J. Chem. Phys., 137, 22A501 (2012). 
 \end{itemize}
 
-
+The model systems are used as a test set for OpenFMS90.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1322,75 +1344,60 @@ FMS90 contains a series of (analytical) model systems that can be used for devel
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% New section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage \section{Examples and testjobs}
-\label{extest}
+% \newpage \section{Examples and testjobs}
+% \label{extest}
 
-\bfec{shall we write something here about the tests used for the code?}
+% \bfec{shall we write something here about the tests used for the code?}
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% New section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\newpage \section{Bibliography and links}
-%\label{fmsbib} 
-%
-%\subsection*{The AIMS algorithm}
-%Reprints of Martinez group articles are available from 
-%\url{http://mtzweb.stanford.edu/reprints0.html}
-%
-%\begin{itemize}
-%
-%\item T.~J. Martinez, M.~BenNun, and R.~D. Levine.
-%\newblock Multi-electronic-state molecular dynamics: A wave function approach
+%%% New section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \newpage \section{Bibliography and links}
+% \label{fmsbib} 
+
+% \subsection*{The AIMS algorithm}
+
+% \begin{itemize}
+
+% \item T.~J. Martinez, M.~BenNun, and R.~D. Levine.
+% \newblock Multi-electronic-state molecular dynamics: A wave function approach
 %  with applications.
-%\newblock {\em Journal of Physical Chemistry}, 100(19):7884--7895, May 9 1996.
-%
-%\item M.~BenNun, T.~J. Martinez, and R.~D. Levine.
-%\newblock Multiple traversals of a conical intersection: electronic quenching
+% \newblock {\em Journal of Physical Chemistry}, 100(19):7884--7895, May 9 1996.
+
+% \item M.~BenNun, T.~J. Martinez, and R.~D. Levine.
+% \newblock Multiple traversals of a conical intersection: electronic quenching
 %  in Na*+H$_2$.
-%\newblock {\em Chemical Physics Letters}, 270(3-4):319--326, May 23
-%1997.
-%
-%\item M.~Ben-Nun and T.~J. Martinez.
-%\newblock Nonadiabatic molecular dynamics: Validation of the multiple spawning
+% \newblock {\em Chemical Physics Letters}, 270(3-4):319--326, May 23
+% 1997.
+
+% \item M.~Ben-Nun and T.~J. Martinez.
+% \newblock Nonadiabatic molecular dynamics: Validation of the multiple spawning
 %  method for a multidimensional problem.
-%\newblock {\em Journal of Chemical Physics}, 108(17):7244--7257, May 1 1998.
-%
-%\item Michal Ben-Nun and Todd.~J. Mart{\'\i}nez.
-%\newblock Ab Initio Quantum Molecular Dynamics, chapter in {\em
+% \newblock {\em Journal of Chemical Physics}, 108(17):7244--7257, May 1 1998.
+
+% \item Michal Ben-Nun and Todd.~J. Mart{\'\i}nez.
+% \newblock Ab Initio Quantum Molecular Dynamics, chapter in {\em
 %  Advances in Chemical Physics} volume 121, page 439.
-%\newblock John Wiley \& Sons, Inc., 2002.
-%
-%\item Ben~G. Levine, Joshua~D. Coe, Aaron~M. Virshup, and Todd~J. Mart{\'\i}nez.
-%\newblock Implementation of ab initio multiple spawning in the molpro quantum
+% \newblock John Wiley \& Sons, Inc., 2002.
+
+% \item Ben~G. Levine, Joshua~D. Coe, Aaron~M. Virshup, and Todd~J. Mart{\'\i}nez.
+% \newblock Implementation of ab initio multiple spawning in the molpro quantum
 %  chemistry package.
-%\newblock {\em Chemical Physics}, 347(1-3):3--16, 2008.
-%
-%
-%\end{itemize}
-%
-%\subsection*{Related and included packages}
-%
-%\begin{itemize}
-%
-%\item Jay~William Ponder.
-%\newblock Tinker, 2004. \url{http://dasher.wustl.edu/tinker/}
-%
-%\item H.-J. Werner, P.~J. Knowles, R.~Lindh, M.~Sch\"utz, P.~Celani, T.~Korona, F.~R.
-%  Manby, G.~Rauhut, R.~D. Amos, A.~Bernhardsson, A.~Berning, D.~L. Cooper,
-%  M.~J.~O. Deegan, A.~J. Dobbyn, F.~Eckert, C.~Hampel, G.~Hetzer, A.~W. Lloyd,
-%  S.~J. McNicholas, W.~Meyer, M.~E. Mura, A.~Nicklass, P.~Palmieri, R.~Pitzer,
-%  U.~Schumann, H.~Stoll, A.~J. Stone, R.~Tarroni, and T.~Thorsteinsson.
-%\newblock Molpro, version, a package of ab initio programs, 2006. \url{http://www.molpro.net/}
-%
-%\item HDF5 (library for writing output) - \url{http://hdfgroup.org/}
-%
-%\item Doxygen (documentation generator) - \url{http://www.doxygen.org/}
-%
-%\end{itemize}
-%
-%
+% \newblock {\em Chemical Physics}, 347(1-3):3--16, 2008.
+
+% \end{itemize}
+% %
+% %\subsection*{Related and included packages}
+% %
+% %\begin{itemize}
+% %
+% %\item Doxygen (documentation generator) - \url{http://www.doxygen.org/}
+% %
+% %\end{itemize}
+% %
+% %
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
