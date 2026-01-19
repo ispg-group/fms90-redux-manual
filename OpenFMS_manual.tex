@@ -13,7 +13,7 @@
 \newcommand\bfec[1]{\textcolor{orange}{\textit{ XXX BFEC: #1 XXX }}}
 \renewcommand\dh[1]{\textcolor{purple}{\textit{ DH: #1 }}}
 
-\title{OpenFMS90 \\ Users' Guide}
+\title{OpenFMS \\ Users' Guide}
 %\author{Benjamin G. Levine, Joshua D. Coe, Aaron M. Virshup, Hongli Tao, \\ Christian R. Evenhuis, William J. Glover, Toshifumi Mori, Michal Ben-Nun, Yorick Lassmann, \\ Daniel Hollas, Basile F. E. Curchod,  and Todd J. Mart\'{i}nez}
 \date{\today}                     
 \begin{document}
@@ -31,8 +31,7 @@
 
 
 %2 INTRO
-OpenFMS90 implements the Ab Initio Multiple Spawning (AIMS) method to perform dynamics 
-calculations on multiple electronic states. 
+OpenFMS implements the Ab Initio Multiple Spawning (AIMS) method to perform dynamics calculations on multiple electronic states. OpenFMS is based on the code FMS90, originally created by Todd J. Mart\'{i}nez and Michal Ben-Nun, and further developed by Benjamin G. Levine, Joshua D. Coe, Aaron M. Virshup, Hongli Tao, Christian R. Evenhuis, William J. Glover, Basile F. E. Curchod, Toshifumi Mori, and Nanna Holmgaard List. The OpenFMS project was initiated by Daniel Hollas and Basile F. E. Curchod, with contributions from Yorick Lassmann and Vera Brieskorn.
 
 AIMS provides a description of a time-evolving molecular wavepacket with a multiconfigurational, 
 product Gaussian function basis. To allow the size of the basis set to remain small while describing 
@@ -91,12 +90,12 @@ the above:
 
 \subsection{About this manual}
 
-If you have any comments or additions for this manual, please open an issues on the GitHub repository of OpenFMS90 (\url{https://github.com/ispg-group/fms90-redux/tree/main}).
+If you have any comments or additions for this manual, please open an issue on the GitHub repository of OpenFMS (\url{https://github.com/ispg-group/openfms}).
 
-\newpage \section{Building OpenFMS90}
+\newpage \section{Building OpenFMS}
 \label{build}
 
-To compile OpenFMS90, please follow the up-to-date instructions that can be found on the GitHub page of the code: \url{https://github.com/ispg-group/fms90-redux/tree/main}.
+To compile OpenFMS, please follow the up-to-date instructions that can be found on the GitHub page of the code: \url{https://github.com/ispg-group/openfms}.
 
 
 % \subsection{Quick start}
@@ -134,17 +133,17 @@ To compile OpenFMS90, please follow the up-to-date instructions that can be foun
 %%% New section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newpage \section{Overview}
+\section{Overview}
 \label{running} 
 
-This section provides an overview of the basic OpenFMS90 program flow for AIMS dynamics. The reader is assumed to be familiar with the fundamental principles of AIMS; see the OpenFMS90 bibliography (sec. \ref{sec:aimsbiblio}) for a list of references. 
+This section provides an overview of the basic OpenFMS program flow for AIMS dynamics. The reader is assumed to be familiar with the fundamental principles of AIMS; see the OpenFMS bibliography (sec. \ref{sec:aimsbiblio}) for a list of references. 
 %For details of other calculation types, see section \ref{other}.
 
 
 \subsection{Initial Conditions}
 \label{initial} 
 
-Prior to the beginning of AIMS dynamics, initial conditions may be generated from an adequate ground-state distribution. OpenFMS90 provides a variety of sampling methods, depending on the system type. Alternatively, initial coordinates and momenta may be specified manually in Geometry.dat (sec. \ref{geomdat}).
+Prior to the beginning of AIMS dynamics, initial conditions may be generated from an adequate ground-state distribution. OpenFMS provides a variety of sampling methods, depending on the system type. Alternatively, initial coordinates and momenta may be specified manually in Geometry.dat (sec. \ref{geomdat}).
 
 Initial conditions are generated in the following manner (with corresponding namelist variables):
 
@@ -168,14 +167,14 @@ For purely QM PESs, initial conditions are sampled from the harmonic oscillator 
 \subsection{Restarting}
 \label{restart} 
 
-If, in Control.dat, \verb*$iRestart$ is not equal to 0, OpenFMS90 will attempt to restart dynamics. A restart requires all the original input files and Checkpoint.txt (if Checkpoint.txt cannot be found, OpenFMS90 will use Last\_Bundle.txt). Any variable in Control.dat may be changed between restarts.
+If, in Control.dat, \verb*$iRestart$ is not equal to 0, OpenFMS will attempt to restart dynamics. A restart requires all the original input files and Checkpoint.txt (if Checkpoint.txt cannot be found, OpenFMS will use Last\_Bundle.txt). Any variable in Control.dat may be changed between restarts.
 
 \subsection{Dynamics}
 \label{dyn}
 
-Time-evolution of the combined electronic and nuclear wavefunction is, of course, the main goal of OpenFMS90, and the bulk of computational time is spent doing this. At each timestep, the classical trajectories and their quantum mechanical amplitudes are time-evolved by one timestep. The timestep is determined on the fly, and may be automatically reduced to integrate rapidly-varying regions of the PES.
+Time-evolution of the combined electronic and nuclear wavefunction is, of course, the main goal of OpenFMS, and the bulk of computational time is spent doing this. At each timestep, the classical trajectories and their quantum mechanical amplitudes are time-evolved by one timestep. The timestep is determined on the fly, and may be automatically reduced to integrate rapidly-varying regions of the PES.
 
-After moving the full wavefunction forward in time by one timestep, OpenFMS90 will spawn new trajectory basis functions, if necessary. OpenFMS90 will also terminate the propagation of trajectories that no longer have enough population to spawn, or are on the state specified by ``IgnoreState". Quantum mechanically, the terminated trajectory basis functions are assumed to occupy a block of the Hamiltonian that does not change in time, and whose off-diagonal coupling elements with all live basis functions are 0. In this way, the energy and population of terminated basis functions are still included in overall analyses of simulation, but are not evolved in time.
+After moving the full wavefunction forward in time by one timestep, OpenFMS will spawn new trajectory basis functions, if necessary. OpenFMS will also terminate the propagation of trajectories that no longer have enough population to spawn, or are on the state specified by ``IgnoreState". Quantum mechanically, the terminated trajectory basis functions are assumed to occupy a block of the Hamiltonian that does not change in time, and whose off-diagonal coupling elements with all live basis functions are 0. In this way, the energy and population of terminated basis functions are still included in overall analyses of simulation, but are not evolved in time.
 
 Output is written to files after every ``nStepToPrint''timesteps. Information sufficient to reconstruct the entire simulation state at a given timestep is written to ``Checkpoint.dat".
 
@@ -1080,9 +1079,9 @@ This file is generated by AIMS if either FrequenciesMP.dat or Hessian.dat is use
 
 
 
-\subsection{OpenFMS90-Terachem}
-\label{fms90tcl} 
-Follow the most up-to-date instructions on the GitHub page of OpenFMS90: \url{https://github.com/ispg-group/fms90-redux/tree/main}.
+\subsection{OpenFMS-Terachem}
+\label{fms90tc}
+Follow the most up-to-date instructions on the GitHub page of OpenFMS: \url{https://github.com/ispg-group/openfms}.
 %\subsection{FMS90-Quantics}
 %\label{fms90quant} 
 
@@ -1164,50 +1163,12 @@ Follow the most up-to-date instructions on the GitHub page of OpenFMS90: \url{ht
 % \item  If you're storing the orbitals, they need to get fed in through the input template.
 % \item  If you're NOT storing the orbitals, FMS will make a new copy of the wavefunction file you specify in ``WfnFile''for each trajectory and centroid.
 %\end{enumerate}
-%
-%
-%\subsection{Mopac and Amber}
-%This interface is selected with \verb*$model=`mopac'$ in Control.dat.
-%
-%Mopac is an ESP capable of generating semi-empirical PESs. It has also been interfaced with Amber, an MM package for generating QM/MM PESs. 
-%\label{mpa} 
-%
-%
-%
-%
-%
-%\subsection{Molpro and Tinker}
-%\label{mpt} 
-%This interface is selected with \verb*$model=`molpro'$ in Control.dat.
-%
-%Molpro is a suite of \textit{ab initio} electronic structure codes;
-%FMS can use any PES generated by molpro for single state BOMD, but can
-%currently use only CAS and CASPT2 PESs for full multistate AIMS
-%propagation. For QM/MM simulations with molpro, the Tinker package is
-%used for the MM system. The current implementation does not allow for
-%bonding across the QM/MM boundary.
-% 
-%\subsubsection{Additional Input Files}
-%
-%\begin{itemize}
-% \item  \textit{name}.com : molpro input file. This file contains instructions for molpro's electronic structure calculations. It can be generated using the 'deckMP' script in the 'util' directory of the FMS distribution (sec. \ref{deckmp}).
-% \item  \textit{fmsname}.in.xyz: tinker xyz file (for QM/MM runs only). The value of \textit{fmsname} is specified in Control.dat. This file contains the geometry and atom types for the entire system. Note that the QM system must be listed before the MM system, and in the same order as in Control.dat. The QM geometry will be overwritten unless InitialCond=0 in Control.dat. The MM geometry may be modified using the GenSolvent, RelaxSteps, and various equilibration keywords in Control.dat.
-% \item \textit{fmsname}.key: tinker keyword file (for QM/MM runs
-%only). The value of \textit{fmsname} is specified in Control.dat. This
-%file contains various keywords to direct tinker's calculation of the
-%MM force field. It MUST contain these 2 entries:
-%
-% \begin{minipage}{.7\linewidth} \begin{verbatim}
-%parameters    [/path/to/parameters/paramfile.prm] 
-%inactive      -1   [Num QM atoms] 
-%\end{verbatim} \end{minipage} 
-%\end{itemize}
-%
+
 
 \subsection{FMSZero}
 \label{zero} 
 
-OpenFMS90 contains a series of (analytical) model systems that can be used for development or to get acquainted with a typical AIMS simulation without the associated electronic-structure costs. The desired model is selected with the keyword gliModel. The following models are implemented:
+OpenFMS contains a series of (analytical) model systems that can be used for development or to get acquainted with a typical AIMS simulation without the associated electronic-structure costs. The desired model is selected with the keyword gliModel. The following models are implemented:
 
 \begin{itemize}
 \item gliModel=2 \\ Persico 2-D 2-state CI (in stretched coordinates) \\ Ferretti et al, J. Chem. Phys., 104, 5517 (1996).
@@ -1219,7 +1180,7 @@ Spin-orbit coupling Model 1D 2-state (1 singlet, 1 triplet)  \\
    Granucci et al, J. Chem. Phys., 137, 22A501 (2012). 
 \end{itemize}
 
-The model systems are used as a test set for OpenFMS90.
+The model systems are used as a test set for OpenFMS.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1300,20 +1261,10 @@ The model systems are used as a test set for OpenFMS90.
 %Usage: \verb*$NewGeometry.e [Bundle.h5 file]$
 %
 %Create a new ``Geometry.dat''file (with both the geometry and momenta) from an existing run.
-%
-%
-%\paragraph{deckMP.e}
-%\label{deckmp}
-%Creates an input deck for use with FMSMolpro or FMSMolproTinker. Requires a Geometry.dat file for QM runs or a .in.xyz file for QM/MM runs.
-%
-%
-%
-%
+
 %\paragraph{Tk\_Solvate.e}
 %
 %Requires: QM geometry in Geometry.dat; solvent molecule prototype defined in Tinker format in Solvent.in.xyz. Creates tinker input file with an arbitrary number of solvent molecules.
-%
-%
 %
 %The cluster geometry described in the tinker .in.xyz file will be very high energy, and must be quenched before dynamics.
 %
@@ -1338,7 +1289,7 @@ The model systems are used as a test set for OpenFMS90.
 %
 %\paragraph{CleanText.e}
 %
-%Removes any and all output files that may be recovered by running DumpText.e. Note that it does not remove FMS.out or any electronic-structure specific output. Run CleanText.e in the directory containing the text files to be removed.
+%Removes any and all output files that may be recovered by running DumpText.e. Note that it does not remove FMS.out or any electronic-structure specific output. Run CleanText.e in the directory containincommentsg the text files to be removed.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1396,13 +1347,4 @@ The model systems are used as a test set for OpenFMS90.
 % %\item Doxygen (documentation generator) - \url{http://www.doxygen.org/}
 % %
 % %\end{itemize}
-% %
-% %
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% New section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
 \end{document}
